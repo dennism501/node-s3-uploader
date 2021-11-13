@@ -1,0 +1,1 @@
+export const photoBucket = process.env.AWS_BUCKET_NAME_UPLOAD
