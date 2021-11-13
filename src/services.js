@@ -38,6 +38,7 @@ const downloadFile = (fileName) => {
         Bucket: awsPhotoBucket,
         Key: fileName
     }
+    //Change the file to something else
      return s3.getObject(params,(err, data) => {
         fs.writeFileSync(`./images/${fileName}`, data.Body)
     })
