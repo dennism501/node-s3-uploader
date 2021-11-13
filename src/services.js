@@ -1,11 +1,16 @@
 const AWS = require("aws-sdk");
 const fs = require("fs");
-const { awsPhotoBucket, awsAccessKey, awsSecretKey } = require("./config.js");
+const {
+  awsPhotoBucket,
+  awsAccessKey,
+  awsSecretKey,
+  awsRegion,
+} = require("./config.js");
 
 const s3 = new AWS.S3({
   accessKeyId: awsAccessKey,
   secretAccessKey: awsSecretKey,
-  region: "af-south-1"
+  region: awsRegion,
 });
 
 //=====READ AND WRITE======
@@ -28,6 +33,17 @@ const uploadFile = (fileName) => {
   });
 };
 
+const downloadFile = (fileName) => {
+    const params = {
+        Bucket: awsPhotoBucket,
+        Key: fileName
+    }
+     return s3.getObject(params,(err, data) => {
+        fs.writeFileSync(`./images/${fileName}`, data.Body)
+    })
+};
+
 module.exports = {
   uploadFile,
+  downloadFile
 };
